@@ -35,12 +35,10 @@ var data=circle(20, 0, 0, 0, 200);
 
 ```js
 [{
-    {
-        num: number,// 点的个数
-        points: Array<number>,// 点坐标
-        link: null, //如果是null，表示不采用索引，否则点采用索引
-        graph: "FanTriangle"// 表示这些点应该采用画笔方法绘制
-    }
+    num: number,// 点的个数
+    points: Array<number>,// 点坐标
+    link: null, //如果是null，表示不采用索引，否则点采用索引
+    graph: "FanTriangle"// 表示这些点应该采用画笔方法绘制
 },...]
 ```
 
