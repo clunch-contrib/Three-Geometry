@@ -7,11 +7,12 @@ import AppComponent from './App/index'
 import uiBind from './directive/ui-bind'
 import uiModel from './directive/ui-model'
 import uiOn from './directive/ui-on'
+import uiLazy from './directive/ui-lazy'
 
 @Module({
     declarations: [
         AppComponent,
-        uiBind, uiModel, uiOn
+        uiBind, uiModel, uiOn, uiLazy
     ],
     imports: [],
     exports: [],

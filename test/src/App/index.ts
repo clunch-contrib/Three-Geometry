@@ -1,4 +1,6 @@
-import { Component } from 'nefbl'
+import { Component, ref } from 'nefbl'
+
+import pages from './pages/lazy-load'
 
 import style from './index.scss'
 import template from './index.html'
@@ -10,5 +12,18 @@ import template from './index.html'
 })
 export default class {
 
+    currentPage: any
+
+    $setup() {
+        return {
+            currentPage: ref(null)
+        }
+    }
+
+    loadPage(event) {
+        pages[event.target.innerText.trim()]().then(data => {
+            this.currentPage = data.default
+        })
+    }
 
 }

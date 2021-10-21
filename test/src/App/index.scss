@@ -1,0 +1,22 @@
+div {
+    margin: 10px;
+
+    &.nav {
+        &>span {
+            display: inline-block;
+            border: 1px solid #cec4c4;
+            margin: 5px;
+            padding: 5px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgb(240, 235, 235);
+            }
+        }
+    }
+
+    &.content {
+        outline: 1px solid red;
+        display: inline-block;
+    }
+}
