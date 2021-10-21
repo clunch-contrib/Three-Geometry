@@ -77,6 +77,24 @@ import circle from 'three-geometry/circle.js';
 var data=circle(precision, cx, cy, cz, radius);
 ```
 
+- 圆锥体（cone）
+
+```js
+import cone from 'three-geometry/cone.js';
+
+/**
+ * @param {number} precision 精度
+ * @param {number} cx 圆锥体底部圆心X坐标
+ * @param {number} cy 圆锥体底部圆心Y坐标
+ * @param {number} cz 圆锥体底部圆心Z坐标
+ * @param {number} radius 圆锥体底部半径
+ * @param {number} height 圆锥体的高
+ */
+var data=cone(precision, cx, cy, cz, radius,height);
+```
+
+返回的数据data数组长度为2，分别表示上边的椎体和底部的圆形。
+
 开源协议
 ---------------------------------------
 [MIT](https://github.com/clunch-contrib/Three-Geometry/blob/master/LICENSE)
