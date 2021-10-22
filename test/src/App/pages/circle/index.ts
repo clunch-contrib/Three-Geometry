@@ -13,6 +13,8 @@ import template from './index.html'
 })
 export default class {
 
+    interval: any
+
     $mounted() {
 
         let image3d = new image3D(document.getElementById('canvas'), {
@@ -31,7 +33,7 @@ export default class {
 
         let painter = image3d.Painter();
 
-        setInterval(() => {
+        this.interval = setInterval(() => {
             // 传递照相机
             image3d.setUniformMatrix("u_matrix",
                 camera.rotateBody(Math.PI * 0.02, -1, -1, 0, 1, 1, 0).value()

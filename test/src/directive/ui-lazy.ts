@@ -1,5 +1,7 @@
 import { Directive, mountComponent } from 'nefbl'
 
+let interval = null
+
 @Directive({
     selector: "ui-lazy"
 })
@@ -9,8 +11,9 @@ export default class {
 
     $update(el, binding) {
         if (binding.value) {
+            if (interval) clearInterval(interval)
             el.innerHTML = ""
-            mountComponent(el, binding.value, this._module)
+            interval = mountComponent(el, binding.value, this._module).interval
             el.children[0].setAttribute('class', 'doc-view')
         }
     }

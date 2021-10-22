@@ -93,7 +93,25 @@ import cone from 'three-geometry/cone.js';
 var data=cone(precision, cx, cy, cz, radius,height);
 ```
 
-返回的数据data数组长度为2，分别表示上边的椎体和底部的圆形。
+返回的数据data数组长度为2，分别表示上边的椎体和底部的圆。
+
+- 棱锥体（conule）
+
+```js
+import conule from 'three-geometry/conule.js';
+
+/**
+ * @param {number} num 表示棱的个数，至少是3
+ * @param {number} cx 棱锥体底部圆心X坐标
+ * @param {number} cy 棱锥体底部圆心Y坐标
+ * @param {number} cz 棱锥体底部圆心Z坐标
+ * @param {number} radius 棱锥体底部半径
+ * @param {number} height 棱锥体的高
+ */
+var data=conule(num, cx, cy, cz, radius,height);
+```
+
+返回的数据data数组长度为2，分别表示上边的椎体和底部的多边形。
 
 开源协议
 ---------------------------------------
