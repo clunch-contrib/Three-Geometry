@@ -39,7 +39,7 @@ var threeGeometry = ThreeGeometry(options);
 
 ```js
 {
-    precision:number,// 精度
+    precision:number, // 精度，必输
 }
 ```
 
@@ -47,7 +47,16 @@ var threeGeometry = ThreeGeometry(options);
 
 ```js
 {
+    // 点数组
+    points:Array<x1:number,y1:number,z1:number,x2:number,y2:number,z2:number,...>,
 
+    // 点的个数
+    length:number,
+
+    // 字符串，表示应该使用什么方法来绘制这些点
+    // 关于这些方法，你可以参考image3D.js中的文档：
+    // https://hai2007.gitee.io/image3d/index.html#/api?fixed=painter
+    methods:Triangle|StripTriangle|FanTriangle,
 }
 ```
 
@@ -58,22 +67,28 @@ var threeGeometry = ThreeGeometry(options);
 ### 圆柱体(cylinder)
 
 ```js
-// 底部坐标（x,y,z)、高height
-var data = threeGeometry.cylinder(x,y,z,height);
+// 底部坐标（x,y,z)、半径radius、高height
+threeGeometry.cylinder(function(data){
+    // todo
+},x,y,z,radius,height);
 ```
 
 ### 棱柱体(prism)
 
 ```js
-// 底部坐标（x,y,z)、高height、棱的个数num
-var data = threeGeometry.prism(x,y,z,height,num);
+// 底部坐标（x,y,z)、半径radius、高height、棱的个数num
+var data = threeGeometry.prism(function(data){
+    // todo
+},x,y,z,radius,height,num);
 ```
 
 ### 球体(sphere)
 
 ```js
 // 球心（cx,cy,cz)、半径radius
-var data = threeGeometry.sphere(cx,cy,cz,radius);
+var data = threeGeometry.sphere(function(data){
+    // todo
+},cx,cy,cz,radius);
 ```
 
 需要注意的是，为了方便计算，默认我们统一是把物体看成平放在xoz平面上。
