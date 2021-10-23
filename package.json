@@ -1,7 +1,12 @@
 {
   "name": "three-geometry",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "为image3D.js设计开发的三维几何坐标运算库",
+  "scripts": {
+    "start": "npm install && npm run dev",
+    "dev": "rollup --config rollup.config.js -i ./src/index.js -o ./dist/three-geometry.js --watch",
+    "build": "hai2007_nodejs -d dist && rollup --config rollup.config.js && terser ./dist/three-geometry.js -o ./dist/three-geometry.min.js && hai2007_nodejs --config nodejs.config.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/clunch-contrib/Three-Geometry.git"
@@ -17,6 +22,17 @@
     "url": "https://github.com/clunch-contrib/Three-Geometry/issues"
   },
   "homepage": "https://github.com/clunch-contrib/Three-Geometry#readme",
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@hai2007/nodejs": "^1.0.1",
+    "@rollup/plugin-babel": "^5.2.1",
+    "image3d": "^3.2.4",
+    "rollup": "^1.17.0",
+    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "terser": "^4.1.2"
+  },
   "dependencies": {
     "@hai2007/algorithm": "^0.7.1",
     "@hai2007/tool": "^0.9.1"

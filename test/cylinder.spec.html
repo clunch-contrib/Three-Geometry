@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../logo.png">
+    <title>圆柱体</title>
+
+    <script src="../node_modules/image3d/build/image3D.js"></script>
+    <script src="../dist/three-geometry.js"></script>
+
+    <!-- 顶点着色器 -->
+    <script type='x-shader/x-vertex' id='vs'>
+        attribute vec4 a_position;
+        void main(){
+            gl_Position=a_position;
+        }
+    </script>
+
+    <!-- 片段着色器 -->
+    <script type='x-shader/x-fragment' id='fs'>
+        void main(){
+            gl_FragColor=vec4(0.0,0.0,1.0,1.0);
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <canvas width=500 height=500>非常抱歉，您的浏览器不支持canvas!</canvas>
+
+    <script>
+
+        var image3d = new image3D(document.getElementsByTagName('canvas')[0], {
+            "vertex-shader": document.getElementById("vs").innerText,
+            "fragment-shader": document.getElementById("fs").innerText,
+            "depth": true
+        });
+
+        var painter = image3d.Painter();
+
+
+
+    </script>
+
+</body>
+
+</html>
