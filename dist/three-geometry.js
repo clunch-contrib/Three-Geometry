@@ -9,7 +9,7 @@
  * Copyright (c) 2021-present hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Sun Oct 24 2021 00:24:18 GMT+0800 (GMT+08:00)
+ * Date:Sun Oct 24 2021 00:43:20 GMT+0800 (GMT+08:00)
  */
 (function () {
   'use strict';
@@ -133,10 +133,6 @@
           length: 2 * num + 2,
           methods: "StripTriangle"
         });
-        return threeGeometry;
-      },
-      // 球
-      sphere: function sphere(doback, cx, cy, cz, radius) {
         return threeGeometry;
       }
     };

@@ -82,15 +82,6 @@ var data = threeGeometry.prism(function(data){
 },x,y,z,radius,height,num);
 ```
 
-### 球体(sphere)
-
-```js
-// 球心（cx,cy,cz)、半径radius
-var data = threeGeometry.sphere(function(data){
-    // todo
-},cx,cy,cz,radius);
-```
-
 需要注意的是，为了方便计算，默认我们统一是把物体看成平放在xoz平面上。
 
 开源协议

@@ -48,12 +48,6 @@ let ThreeGeometry = options => {
             });
 
             return threeGeometry;
-        },
-
-        // 球
-        sphere(doback, cx, cy, cz, radius) {
-
-            return threeGeometry;
         }
     };
 
