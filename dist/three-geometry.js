@@ -4,12 +4,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 1.1.0
+ * version 1.1.2
  *
  * Copyright (c) 2021-present hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Sun Oct 24 2021 10:26:59 GMT+0800 (GMT+08:00)
+ * Date:Mon Oct 25 2021 00:28:37 GMT+0800 (GMT+08:00)
  */
 (function () {
   'use strict';
@@ -63,8 +63,9 @@
     // 计算切割份数
     splitNum: function splitNum(precision, radius) {
       // 根据切割弧度得出切割块数目
-      return Math.ceil(Math.PI * 2 / // 为了满足最小精度而得出的切割弧度
+      var num = Math.ceil(Math.PI * 2 / // 为了满足最小精度而得出的切割弧度
       Math.asin(precision / radius) * 2);
+      return isNaN(num) || num < 12 ? 12 : num;
     }
   };
 
