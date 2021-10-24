@@ -2,6 +2,7 @@ import { isNumber } from '@hai2007/tool/type';
 import circle from './tool/circle';
 import prismHorizontal from './geometry/prism-horizontal';
 import prismVertical from './geometry/prism-vertical';
+import sphereFragment from './geometry/sphere-fragment';
 
 let ThreeGeometry = options => {
 
@@ -46,6 +47,24 @@ let ThreeGeometry = options => {
                 length: 2 * num + 2,
                 methods: "StripTriangle"
             });
+
+            return threeGeometry;
+        },
+
+        // 球体
+        sphere(doback, cx, cy, cz, radius) {
+
+            // 求解出需要切割多少份比较合理
+            let num = circle.splitNum(options.precision, radius);
+
+            // 然后一瓣瓣的绘制
+            for (let i = 0; i < num; i++) {
+                doback({
+                    points: sphereFragment(cx, cy, cz, radius, num, i),
+                    length: num,
+                    methods: "StripTriangle"
+                });
+            }
 
             return threeGeometry;
         }

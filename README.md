@@ -6,6 +6,7 @@
 <p>
   <a href="https://hai2007.gitee.io/npm-downloads?interval=7&packages=three-geometry"><img src="https://img.shields.io/npm/dm/three-geometry.svg" alt="downloads"></a>
   <a href="https://packagephobia.now.sh/result?p=three-geometry"><img src="https://packagephobia.now.sh/badge?p=three-geometry" alt="install size"></a>
+   <a href="https://www.jsdelivr.com/package/npm/three-geometry"><img src="https://data.jsdelivr.com/v1/package/npm/three-geometry/badge" alt="CDN"></a>
   <a href="https://www.npmjs.com/package/three-geometry"><img src="https://img.shields.io/npm/v/three-geometry.svg" alt="Version"></a>
   <a href="https://github.com/clunch-contrib/Three-Geometry/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/three-geometry.svg" alt="License"></a>
   <a href="https://github.com/clunch-contrib/Three-Geometry">
@@ -24,10 +25,21 @@
 npm install --save three-geometry
 ```
 
-然后就可以使用了：
+然后就可以引入：
 
 ```js
 import ThreeGeometry from 'three-geometry';
+```
+
+当然，你也可以通过CDN的方式引入：
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/three-geometry@1"></script>
+```
+
+使用语法：
+
+```js
 var threeGeometry = ThreeGeometry(options);
 ```
 
@@ -62,7 +74,7 @@ var threeGeometry = ThreeGeometry(options);
 
 ## List of Geometry
 
-下面，我们来列举一下具体的几何体有哪些。
+下面，我们来列举一下具体的几何体有哪些（需要注意的是，为了方便计算，默认我们统一是把物体看成平放在xoz平面上）。
 
 ### 圆柱体(cylinder)
 
@@ -82,7 +94,14 @@ var data = threeGeometry.prism(function(data){
 },x,y,z,radius,height,num);
 ```
 
-需要注意的是，为了方便计算，默认我们统一是把物体看成平放在xoz平面上。
+### 球体(sphere)
+
+```js
+// 球心（cx,cy,cz)、半径radius
+var data = threeGeometry.sphere(function(data){
+    // todo
+},cx,cy,cz,radius);
+```
 
 开源协议
 ---------------------------------------

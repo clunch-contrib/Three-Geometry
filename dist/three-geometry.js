@@ -4,12 +4,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 1.0.0
+ * version 1.1.0
  *
  * Copyright (c) 2021-present hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Sun Oct 24 2021 00:43:20 GMT+0800 (GMT+08:00)
+ * Date:Sun Oct 24 2021 10:26:59 GMT+0800 (GMT+08:00)
  */
 (function () {
   'use strict';
@@ -99,6 +99,25 @@
     return points;
   }
 
+  function sphereFragment (cx, cy, cz, radius, num, index) {
+    var points = [cx, cy + radius, cz],
+        deg = Math.PI * 2 / num,
+        point;
+
+    for (var i = 1; i < num * 0.5; i++) {
+      point = rotate(cx, cy, deg * i, cx, cy + radius); // 第一个点
+
+      var point1 = rotate(cx, cz, deg * index, point[0], cz);
+      points.push(point1[0], point[1], point1[1]); // 下一个点
+
+      var point2 = rotate(cx, cz, deg * (index + 1), point[0], cz);
+      points.push(point2[0], point[1], point2[1]);
+    }
+
+    points.push(cx, cy - radius, cz);
+    return points;
+  }
+
   var ThreeGeometry = function ThreeGeometry(options) {
     if (!isNumber(options.precision) || options <= 0) {
       throw new Error('options.precision should be an integer greater than zero');
@@ -133,6 +152,21 @@
           length: 2 * num + 2,
           methods: "StripTriangle"
         });
+        return threeGeometry;
+      },
+      // 球体
+      sphere: function sphere(doback, cx, cy, cz, radius) {
+        // 求解出需要切割多少份比较合理
+        var num = circle.splitNum(options.precision, radius); // 然后一瓣瓣的绘制
+
+        for (var i = 0; i < num; i++) {
+          doback({
+            points: sphereFragment(cx, cy, cz, radius, num, i),
+            length: num,
+            methods: "StripTriangle"
+          });
+        }
+
         return threeGeometry;
       }
     };
