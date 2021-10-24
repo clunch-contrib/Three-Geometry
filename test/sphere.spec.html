@@ -47,7 +47,7 @@
         var buffer = image3d.Buffer();
 
         // 传递照相机
-        image3d.setUniformMatrix("u_matrix", image3d.Camera().rotateBody(0.3, -1, 0, 0, 1, 0, 0).value());
+        image3d.setUniformMatrix("u_matrix", image3d.Camera().rotateBody(1.3, -1, 1, 0, 1, -1, 0).value());
 
         image3d.setUniformFloat("u_color", 0, 1, 0, 1.0);
 
