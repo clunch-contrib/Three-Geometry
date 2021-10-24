@@ -89,7 +89,7 @@ threeGeometry.cylinder(function(data){
 
 ```js
 // 底部坐标（x,y,z)、半径radius、高height、棱的个数num
-var data = threeGeometry.prism(function(data){
+threeGeometry.prism(function(data){
     // todo
 },x,y,z,radius,height,num);
 ```
@@ -98,7 +98,7 @@ var data = threeGeometry.prism(function(data){
 
 ```js
 // 球心（cx,cy,cz)、半径radius
-var data = threeGeometry.sphere(function(data){
+threeGeometry.sphere(function(data){
     // todo
 },cx,cy,cz,radius);
 ```
