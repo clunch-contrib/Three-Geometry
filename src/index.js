@@ -61,7 +61,7 @@ let ThreeGeometry = options => {
             for (let i = 0; i < num; i++) {
                 doback({
                     points: sphereFragment(cx, cy, cz, radius, num, i),
-                    length: num,
+                    length: num + 1,
                     methods: "StripTriangle"
                 });
             }

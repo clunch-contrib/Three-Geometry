@@ -4,12 +4,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 1.1.2
+ * version 1.1.3
  *
  * Copyright (c) 2021-present hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Mon Oct 25 2021 00:28:37 GMT+0800 (GMT+08:00)
+ * Date:Sat Jan 01 2022 00:00:06 GMT+0800 (中国标准时间)
  */
 (function () {
   'use strict';
@@ -163,7 +163,7 @@
         for (var i = 0; i < num; i++) {
           doback({
             points: sphereFragment(cx, cy, cz, radius, num, i),
-            length: num,
+            length: num + 1,
             methods: "StripTriangle"
           });
         }
