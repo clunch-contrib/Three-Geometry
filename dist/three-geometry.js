@@ -4,12 +4,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 1.2.0
+ * version 1.3.0
  *
  * Copyright (c) 2021-present hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Tue May 03 2022 20:17:38 GMT+0800 (GMT+08:00)
+ * Date:Wed May 04 2022 01:36:13 GMT+0800 (GMT+08:00)
  */
 (function () {
   'use strict';
@@ -76,7 +76,7 @@
     return [(x - cx) * cos - (y - cy) * sin + cx, (x - cx) * sin + (y - cy) * cos + cy];
   }
 
-  function prismHorizontal (x, y, z, radius, num) {
+  function prismHorizontal (normal, x, y, z, radius, num, d) {
     var beginX, beginZ;
 
     if (num == 4) {
@@ -88,18 +88,22 @@
       beginZ = z;
     }
 
-    var points = [x, y, z, beginX, y, beginZ],
+    var points = [x, y, z],
         deg = Math.PI * 2 / num;
+    if (normal) points.push(0, d, 0);
+    points.push(beginX, y, beginZ);
+    if (normal) points.push(0, d, 0);
 
     for (var i = 0; i < num; i++) {
       var point = rotate(x, z, deg * (i + 1), beginX, beginZ);
       points.push(point[0], y, point[1]);
+      if (normal) points.push(0, d, 0);
     }
 
     return points;
   }
 
-  function prismVertical (x, y, z, radius, height, num) {
+  function prismVertical (normal, x, y, z, radius, height, num) {
     var beginX, beginZ;
 
     if (num == 4) {
@@ -111,33 +115,57 @@
       beginZ = z;
     }
 
-    var points = [beginX, y, beginZ, beginX, y + height, beginZ],
+    var points = [beginX, y, beginZ],
         deg = Math.PI * 2 / num;
+
+    if (normal) {
+      points.push(beginX - x, 0, beginZ - z);
+    }
+
+    points.push(beginX, y + height, beginZ);
+
+    if (normal) {
+      points.push(beginX - x, 0, beginZ - z);
+    }
 
     for (var i = 0; i < num; i++) {
       var point = rotate(x, z, deg * (i + 1), beginX, beginZ);
-      points.push(point[0], y, point[1], point[0], y + height, point[1]);
+      points.push(point[0], y, point[1]);
+
+      if (normal) {
+        points.push(point[0] - x, 0, point[1] - z);
+      }
+
+      points.push(point[0], y + height, point[1]);
+
+      if (normal) {
+        points.push(point[0] - x, 0, point[1] - z);
+      }
     }
 
     return points;
   }
 
-  function sphereFragment (cx, cy, cz, radius, num, index) {
+  function sphereFragment (normal, cx, cy, cz, radius, num, index) {
     var points = [cx, cy + radius, cz],
         deg = Math.PI * 2 / num,
         point;
+    if (normal) points.push(0, radius, 0);
 
     for (var i = 1; i < num * 0.5; i++) {
       point = rotate(cx, cy, deg * i, cx, cy + radius); // 第一个点
 
       var point1 = rotate(cx, cz, deg * index, point[0], cz);
-      points.push(point1[0], point[1], point1[1]); // 下一个点
+      points.push(point1[0], point[1], point1[1]);
+      if (normal) points.push(point1[0] - cx, point[1] - cy, point1[1] - cz); // 下一个点
 
       var point2 = rotate(cx, cz, deg * (index + 1), point[0], cz);
       points.push(point2[0], point[1], point2[1]);
+      if (normal) points.push(point2[0] - cx, point2[1] - cy, point2[1] - cz);
     }
 
     points.push(cx, cy - radius, cz);
+    if (normal) points.push(0, -radius, 0);
     return points;
   }
 
@@ -159,19 +187,19 @@
       prism: function prism(doback, x, y, z, radius, height, num) {
         // 绘制底部的盖子
         doback({
-          points: prismHorizontal(x, y, z, radius, num),
+          points: prismHorizontal(options.normal, x, y, z, radius, num, -1),
           length: num + 2,
           methods: "FanTriangle"
         }); // 绘制顶部的盖子
 
         doback({
-          points: prismHorizontal(x, y + height, z, radius, num),
+          points: prismHorizontal(options.normal, x, y + height, z, radius, num, 1),
           length: num + 2,
           methods: "FanTriangle"
         }); // 绘制侧边部分
 
         doback({
-          points: prismVertical(x, y, z, radius, height, num),
+          points: prismVertical(options.normal, x, y, z, radius, height, num),
           length: 2 * num + 2,
           methods: "StripTriangle"
         });
@@ -184,7 +212,7 @@
 
         for (var i = 0; i < num; i++) {
           doback({
-            points: sphereFragment(cx, cy, cz, radius, num, i),
+            points: sphereFragment(options.normal, cx, cy, cz, radius, num, i),
             length: num + 1,
             methods: "StripTriangle"
           });

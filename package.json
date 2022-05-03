@@ -1,6 +1,6 @@
 {
   "name": "three-geometry",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "为image3D.js设计开发的三维几何坐标运算库",
   "main": "dist/three-geometry.min.js",
   "scripts": {

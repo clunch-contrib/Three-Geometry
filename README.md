@@ -52,6 +52,7 @@ var threeGeometry = ThreeGeometry(options);
 ```js
 {
     precision:number, // 精度，必输
+    normal:boolean, // 是否需要法向量，默认false
 }
 ```
 
@@ -71,6 +72,25 @@ var threeGeometry = ThreeGeometry(options);
     methods:Triangle|StripTriangle|FanTriangle,
 }
 ```
+
+如果存在法向量，那个就是点```points```格式就会有改变：
+
+```js
+points:Array<x1:number,y1:number,z1:number,x1_normal:number,y1_normal:number,z1_normal:number,x2:number,y2:number,z2:number,...>,
+```
+
+也就是由原来的：
+
+```js
+点1、点2.....
+```
+
+变成了：
+
+```js
+点1、点1的法向量、点2、点2的法向量.....
+```
+
 
 ## List of Geometry
 

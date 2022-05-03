@@ -29,21 +29,21 @@ let ThreeGeometry = options => {
 
             // 绘制底部的盖子
             doback({
-                points: prismHorizontal(x, y, z, radius, num),
+                points: prismHorizontal(options.normal, x, y, z, radius, num, -1),
                 length: num + 2,
                 methods: "FanTriangle"
             });
 
             // 绘制顶部的盖子
             doback({
-                points: prismHorizontal(x, y + height, z, radius, num),
+                points: prismHorizontal(options.normal, x, y + height, z, radius, num, 1),
                 length: num + 2,
                 methods: "FanTriangle"
             });
 
             // 绘制侧边部分
             doback({
-                points: prismVertical(x, y, z, radius, height, num),
+                points: prismVertical(options.normal, x, y, z, radius, height, num),
                 length: 2 * num + 2,
                 methods: "StripTriangle"
             });
@@ -60,7 +60,7 @@ let ThreeGeometry = options => {
             // 然后一瓣瓣的绘制
             for (let i = 0; i < num; i++) {
                 doback({
-                    points: sphereFragment(cx, cy, cz, radius, num, i),
+                    points: sphereFragment(options.normal, cx, cy, cz, radius, num, i),
                     length: num + 1,
                     methods: "StripTriangle"
                 });
