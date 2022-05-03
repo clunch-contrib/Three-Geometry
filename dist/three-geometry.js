@@ -4,12 +4,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 1.1.3
+ * version 1.2.0
  *
  * Copyright (c) 2021-present hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Sat Jan 01 2022 00:00:06 GMT+0800 (中国标准时间)
+ * Date:Tue May 03 2022 20:17:38 GMT+0800 (GMT+08:00)
  */
 (function () {
   'use strict';
@@ -77,11 +77,22 @@
   }
 
   function prismHorizontal (x, y, z, radius, num) {
-    var points = [x, y, z, x + radius, y, z],
+    var beginX, beginZ;
+
+    if (num == 4) {
+      var temp = radius / 1.414;
+      beginX = x + temp;
+      beginZ = z + temp;
+    } else {
+      beginX = x + radius;
+      beginZ = z;
+    }
+
+    var points = [x, y, z, beginX, y, beginZ],
         deg = Math.PI * 2 / num;
 
     for (var i = 0; i < num; i++) {
-      var point = rotate(x, z, deg * (i + 1), x + radius, z);
+      var point = rotate(x, z, deg * (i + 1), beginX, beginZ);
       points.push(point[0], y, point[1]);
     }
 
@@ -89,11 +100,22 @@
   }
 
   function prismVertical (x, y, z, radius, height, num) {
-    var points = [x + radius, y, z, x + radius, y + height, z],
+    var beginX, beginZ;
+
+    if (num == 4) {
+      var temp = radius / 1.414;
+      beginX = x + temp;
+      beginZ = z + temp;
+    } else {
+      beginX = x + radius;
+      beginZ = z;
+    }
+
+    var points = [beginX, y, beginZ, beginX, y + height, beginZ],
         deg = Math.PI * 2 / num;
 
     for (var i = 0; i < num; i++) {
-      var point = rotate(x, z, deg * (i + 1), x + radius, z);
+      var point = rotate(x, z, deg * (i + 1), beginX, beginZ);
       points.push(point[0], y, point[1], point[0], y + height, point[1]);
     }
 
