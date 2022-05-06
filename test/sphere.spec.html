@@ -67,10 +67,10 @@
 
                 buffer.write(new Float32Array(data.points)).use('a_position', 3, 3, 0);
 
-                if (data.methods == 'StripTriangle') {
+                if (data.methods == 'Triangle') {
 
                     image3d.setUniformFloat("u_color", 1, 0, 0, 0.5);
-                    painter.drawStripTriangle(0, data.length);
+                    painter.drawTriangle(0, data.length);
 
                 } else if (data.methods == 'FanTriangle') {
 

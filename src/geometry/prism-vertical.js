@@ -3,44 +3,38 @@ import rotate from '../tool/rotate';
 // 棱柱垂直部分
 
 export default function (normal, x, y, z, radius, height, num) {
+    let points = [];
+    let beginPosition;
 
-    let beginX, beginZ;
     if (num == 4) {
-        let temp = radius / 1.414;
-        beginX = x + temp;
-        beginZ = z + temp;
-
+        beginPosition = rotate(x, z, Math.PI * 0.25, x - radius, z);
     } else {
-        beginX = x + radius;
-        beginZ = z;
+        beginPosition = [x + radius, z];
     }
 
-    let points = [beginX, y, beginZ], deg = Math.PI * 2 / num;
+    let deg = Math.PI * 2 / num, degHalf = Math.PI * 2 / (num * 2);
 
-    if (normal) {
-        points.push(beginX - x, 0, beginZ - z);
-    }
-
-    points.push(beginX, y + height, beginZ);
-
-    if (normal) {
-        points.push(beginX - x, 0, beginZ - z);
-    }
-
+    let endPosition, normalPosition = [];
     for (let i = 0; i < num; i++) {
-        let point = rotate(x, z, deg * (i + 1), beginX, beginZ);
-        points.push(point[0], y, point[1]);
+
+        endPosition = rotate(x, z, deg, ...beginPosition);
 
         if (normal) {
-            points.push(point[0] - x, 0, point[1] - z);
+            let halfPosition = rotate(x, z, degHalf, ...beginPosition);
+            normalPosition = [halfPosition[0], 0, halfPosition[1]];
         }
 
-        points.push(point[0], y + height, point[1]);
+        points.push(beginPosition[0], y, beginPosition[1], ...normalPosition);
+        points.push(beginPosition[0], y + height, beginPosition[1], ...normalPosition);
+        points.push(endPosition[0], y + height, endPosition[1], ...normalPosition);
 
-        if (normal) {
-            points.push(point[0] - x, 0, point[1] - z);
-        }
+        points.push(beginPosition[0], y, beginPosition[1], ...normalPosition);
+        points.push(endPosition[0], y, endPosition[1], ...normalPosition);
+        points.push(endPosition[0], y + height, endPosition[1], ...normalPosition);
 
+
+        beginPosition = endPosition;
     }
+
     return points;
 };

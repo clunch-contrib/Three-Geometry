@@ -29,14 +29,14 @@ let ThreeGeometry = options => {
 
             // 绘制底部的盖子
             doback({
-                points: prismHorizontal(options.normal, x, y, z, radius, num, -1),
+                points: prismHorizontal(options.normal, x, y, z, radius, num, height > 0 ? -1 : 1),
                 length: num + 2,
                 methods: "FanTriangle"
             });
 
             // 绘制顶部的盖子
             doback({
-                points: prismHorizontal(options.normal, x, y + height, z, radius, num, 1),
+                points: prismHorizontal(options.normal, x, y + height, z, radius, num, height > 0 ? 1 : -1),
                 length: num + 2,
                 methods: "FanTriangle"
             });
@@ -44,8 +44,8 @@ let ThreeGeometry = options => {
             // 绘制侧边部分
             doback({
                 points: prismVertical(options.normal, x, y, z, radius, height, num),
-                length: 2 * num + 2,
-                methods: "StripTriangle"
+                length: 6 * num,
+                methods: "Triangle"
             });
 
             return threeGeometry;

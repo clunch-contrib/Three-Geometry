@@ -51,17 +51,17 @@
 
         ThreeGeometry({
             precision: 0.02,
-            normal:true
+            normal: true
         }).prism(function (data) {
 
             console.log(data)
 
             buffer.write(new Float32Array(data.points)).use('a_position', 3, 6, 0);
 
-            if (data.methods == 'StripTriangle') {
+            if (data.methods == 'Triangle') {
 
-                // image3d.setUniformFloat("u_color", 1, 0, 0, 0.5);
-                // painter.drawStripTriangle(0, data.length);
+                image3d.setUniformFloat("u_color", 1, 0, 0, 0.5);
+                painter.drawTriangle(0, data.length);
 
             } else if (data.methods == 'FanTriangle') {
 
@@ -70,7 +70,7 @@
 
             }
 
-        }, 0, 0, 0, 0.5, 0.7, 4);
+        }, 0, 0, 0, 0.5, 0.7, 7);
 
 
     </script>

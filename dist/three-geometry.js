@@ -4,12 +4,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 1.3.0
+ * version 1.4.1
  *
  * Copyright (c) 2021-present hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Wed May 04 2022 01:36:13 GMT+0800 (GMT+08:00)
+ * Date:Fri May 06 2022 22:20:16 GMT+0800 (GMT+08:00)
  */
 (function () {
   'use strict';
@@ -28,6 +28,39 @@
     }
 
     return _typeof(obj);
+  }
+
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+  }
+
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+  }
+
+  function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   var toString = Object.prototype.toString;
@@ -104,43 +137,35 @@
   }
 
   function prismVertical (normal, x, y, z, radius, height, num) {
-    var beginX, beginZ;
+    var points = [];
+    var beginPosition;
 
     if (num == 4) {
-      var temp = radius / 1.414;
-      beginX = x + temp;
-      beginZ = z + temp;
+      beginPosition = rotate(x, z, Math.PI * 0.25, x - radius, z);
     } else {
-      beginX = x + radius;
-      beginZ = z;
+      beginPosition = [x + radius, z];
     }
 
-    var points = [beginX, y, beginZ],
-        deg = Math.PI * 2 / num;
-
-    if (normal) {
-      points.push(beginX - x, 0, beginZ - z);
-    }
-
-    points.push(beginX, y + height, beginZ);
-
-    if (normal) {
-      points.push(beginX - x, 0, beginZ - z);
-    }
+    var deg = Math.PI * 2 / num,
+        degHalf = Math.PI * 2 / (num * 2);
+    var endPosition,
+        normalPosition = [];
 
     for (var i = 0; i < num; i++) {
-      var point = rotate(x, z, deg * (i + 1), beginX, beginZ);
-      points.push(point[0], y, point[1]);
+      endPosition = rotate.apply(void 0, [x, z, deg].concat(_toConsumableArray(beginPosition)));
 
       if (normal) {
-        points.push(point[0] - x, 0, point[1] - z);
+        var halfPosition = rotate.apply(void 0, [x, z, degHalf].concat(_toConsumableArray(beginPosition)));
+        normalPosition = [halfPosition[0], 0, halfPosition[1]];
       }
 
-      points.push(point[0], y + height, point[1]);
-
-      if (normal) {
-        points.push(point[0] - x, 0, point[1] - z);
-      }
+      points.push.apply(points, [beginPosition[0], y, beginPosition[1]].concat(_toConsumableArray(normalPosition)));
+      points.push.apply(points, [beginPosition[0], y + height, beginPosition[1]].concat(_toConsumableArray(normalPosition)));
+      points.push.apply(points, [endPosition[0], y + height, endPosition[1]].concat(_toConsumableArray(normalPosition)));
+      points.push.apply(points, [beginPosition[0], y, beginPosition[1]].concat(_toConsumableArray(normalPosition)));
+      points.push.apply(points, [endPosition[0], y, endPosition[1]].concat(_toConsumableArray(normalPosition)));
+      points.push.apply(points, [endPosition[0], y + height, endPosition[1]].concat(_toConsumableArray(normalPosition)));
+      beginPosition = endPosition;
     }
 
     return points;
@@ -187,21 +212,21 @@
       prism: function prism(doback, x, y, z, radius, height, num) {
         // 绘制底部的盖子
         doback({
-          points: prismHorizontal(options.normal, x, y, z, radius, num, -1),
+          points: prismHorizontal(options.normal, x, y, z, radius, num, height > 0 ? -1 : 1),
           length: num + 2,
           methods: "FanTriangle"
         }); // 绘制顶部的盖子
 
         doback({
-          points: prismHorizontal(options.normal, x, y + height, z, radius, num, 1),
+          points: prismHorizontal(options.normal, x, y + height, z, radius, num, height > 0 ? 1 : -1),
           length: num + 2,
           methods: "FanTriangle"
         }); // 绘制侧边部分
 
         doback({
           points: prismVertical(options.normal, x, y, z, radius, height, num),
-          length: 2 * num + 2,
-          methods: "StripTriangle"
+          length: 6 * num,
+          methods: "Triangle"
         });
         return threeGeometry;
       },
